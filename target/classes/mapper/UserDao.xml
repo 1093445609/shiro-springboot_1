@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.shiro.dao.UserDao">
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        INSERT INTO USER(NAME,PASSWORD,salt)VALUES(#{name},#{password},#{salt})
+
+
+    </insert>
+
+    <select id="listRoles" resultType="java.lang.String">
+
+        SELECT r.name FROM USER u
+            LEFT JOIN user_role ur ON u.id = ur.uid
+            LEFT JOIN Role r ON r.id = ur.rid
+            WHERE u.name =#{name}
+
+
+    </select>
+    <select id="listPermissions" resultType="java.lang.String">
+        SELECT p.name FROM USER u
+	        LEFT JOIN user_role ru ON u.id = ru.uid
+	        LEFT JOIN role r ON r.id = ru.rid
+	        LEFT JOIN role_permission rp ON r.id = rp.rid
+	        LEFT JOIN permission p ON p.id = rp.pid
+	        WHERE u.name =#{name}
+    </select>
+</mapper>

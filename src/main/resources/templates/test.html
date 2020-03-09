@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="UTF-8">
+    <title>用户的测试页面</title>
+</head>
+<body>
+<h2 th:text="${name}"></h2>
+<hr/>
+<div><a href="/login">登陆</a></div>
+<div><a href="/loginout">注销</a></div>
+<div shiro:user="">
+<p> 进入用户添加功能:<a href="/add">用户添加,登陆就可以操作</a></p>
+</div>
+<div shiro:hasPermission="addProduct">
+<p>进入用户更新功能:<a href="/update">用户更新,拥有addProduct权限可以操作</a></p>
+</div>
+<div shiro:hasRole="admin">
+<p >admin页面:<a href="/admin">超级管理admin角色界面</a></p>
+</div>
+<p shiro:hasRole="productManager">productManager产品管理员</p>
+
+<p shiro:hasRole="orderManager">orderManager订单管理员</p>
+
+<p shiro:hasAnyPermissions="editeOrder,updateOrder,listProduct">您的权限至少有以下的一种,editeOrder,updateOrder,listProduct</p>
+
+<p shiro:lacksRole="admin">您不是admin角色</p>
+
+<p  shiro:notAuthenticated="">您还没有登陆,请点击上面的登陆哦</p>
+
+<!-- 输出当前用户信息，通常为登录帐号信息。 -->
+
+<p>Hello, <shiro:principal/>输出当前用户的信息</p>
+<!-- 已认证通过的用户。不包含已记住的用户，这是与user标签的区别所在。 -->
+
+<p shiro:authenticated="">
+
+    Hello, <span shiro:principal=""></span>已认证通过的用户。不包含已记住的用户
+
+</p>
+<!-- 验证当前用户是否为“访客”，即未认证（包含未记住）的用户。 -->
+
+<p shiro:guest="">Please <a href="/login">login</a> 没有登陆可以看到的页面</p>
+<!-- 认证通过或已记住的用户。 -->
+
+<p shiro:user="">
+    认证通过或已记住的用户。
+    Welcome back John! Not John? Click <a href="login.html">here</a> to login.
+
+</p>
+
+</body>
+</html>
